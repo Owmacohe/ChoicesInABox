@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="generator.js"></script>
+    <title>Genre Score Generator</title>
+</head>
+
+<body class="flex column">
+    <div class="flex row" style="width: 100%">
+        <input type="text" id="name">
+
+        <h1>Score:</h1>
+        <h1 id="player_score">0</h1>
+        <h1 id="system_score">0</h1>
+        <h1 id="ratio">0</h1>
+    </div>
+
+    <div class="flex column mechanic_section">
+        <h2>Player mechanics</h2>
+
+        <div class="flex row score_section">
+            <div class="player_score_3" id="Modification of population"></div>
+            <div class="player_score_3" id="Free exploration"></div>
+            <div class="player_score_3" id="Multiple ways to finish a discussion"></div>
+            <div class="player_score_3" id="Multiple ways to complete a task/quest"></div>
+            <div class="player_score_3" id="Multiple ways to win a combat"></div>
+            <div class="player_score_3" id="Unbounded creation / art-making"></div>
+        </div>
+
+        <div class="flex row score_section">
+            <div class="player_score_2" id="Story choices matter"></div>
+            <div class="player_score_2" id="Skill trees / character upgrading"></div>
+            <div class="player_score_2" id="Purchasing/upgrading items"></div>
+            <div class="player_score_2" id="Item/pickup use"></div>
+            <div class="player_score_2" id="Can win"></div>
+            <div class="player_score_2" id="Can lose"></div>
+        </div>
+
+        <div class="flex row score_section">
+            <div class="player_score_1" id="Inventory"></div>
+            <div class="player_score_1" id="Localized exploration"></div>
+        </div>
+    </div>
+
+    <div class="flex column mechanic_section">
+        <h2>System mechanics</h2>
+
+        <div class="flex row score_section">
+            <div class="system_score_3" id="Advanced NPC logic"></div>
+            <div class="system_score_3" id="Game physics"></div>
+            <div class="system_score_3" id="Random terrain/layout generation"></div>
+            <div class="system_score_3" id="Generative simulation/evolution"></div>
+            <div class="system_score_3" id="Runtime terrain/layout modification"></div>
+        </div>
+
+        <div class="flex row score_section">
+            <div class="system_score_2" id="Random events"></div>
+            <div class="system_score_2" id="Random item/reward generation"></div>
+        </div>
+
+        <div class="flex row score_section">
+            <div class="system_score_1" id="Enemy combat/movement AI"></div>
+            <div class="system_score_1" id="Effect/weapon damage variance"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

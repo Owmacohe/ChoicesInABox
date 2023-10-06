@@ -1,0 +1,41 @@
+h1 {
+    margin: 10px;
+}
+
+input {
+    font-size: 20px;
+    width: 25%;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.column { flex-direction: column; }
+.row { flex-direction: row; }
+
+.score_section {
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+
+    margin: 20px;
+}
+
+.player_score_1, .player_score_2, .player_score_3, .system_score_1, .system_score_2, .system_score_3 {
+    width: 33%;
+}
+
+#player_score {
+    color: red;
+}
+
+#system_score {
+    color: blue;
+}
+
+#ratio {
+    color: purple;
+}
