@@ -1,21 +1,24 @@
+using System;
 using UnityEngine;
 
-namespace Mechanics
-{
-    public abstract class MechanicPattern
-    {
-        protected MechanicManager Manager { get; }
-        
-        protected MechanicPattern(MechanicManager manager)
-        {
-            Manager = manager;
-        }
+public enum MechanicEvent { Move, Mouse, ClickDown, ClickUp, KeyDown, KeyUp }
 
-        public void FixedUpdate() { }
-        public void Move() { }
-        public void Jump() { }
-        public void Mouse(Vector2 position) { }
-        public void Click(Vector2 position, GameObject clicked) { }
-        public void KeyOrButton(KeyCode code) { }
-    }
+public abstract class MechanicPattern : MonoBehaviour
+{
+    public virtual void Move() { }
+    public virtual void Mouse(Vector2 position) { }
+    public virtual void ClickDown(Vector2 position, GameObject clicked) { }
+    public virtual void ClickUp(Vector2 position, GameObject clicked) { }
+    public virtual void KeyDown(string keyName) { }
+    public virtual void KeyUp(string keyName) { }
+}
+
+public class PlayerMechanicPattern : MechanicPattern
+{
+        
+}
+
+public class SystemMechanicPattern : MechanicPattern
+{
+        
 }

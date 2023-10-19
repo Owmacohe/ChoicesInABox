@@ -1,60 +1,54 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mechanics
+public class MechanicManager : MonoBehaviour
 {
-    public enum MechanicEvent { FixedUpdate, Move, Jump, Mouse, Click, KeyOrButton }
-    
-    public class MechanicManager : MonoBehaviour
+    void Start()
     {
-        public Dictionary<Type, MechanicPattern> Mechanics { get; private set; }
+        AddMechanic<EntitiesPattern>();
+        AddMechanic<PopulationModification>();
+    }
 
-        public void Initialize(float ratio, float playerSaturation, float systemSaturation)
+    public void Initialize(float ratio, float playerSaturation, float systemSaturation)
+    {
+        // TODO: convert data into a list of mechanic patterns and add them as components
+    }
+
+    void AddMechanic<T>() where T : MechanicPattern
+    {
+        gameObject.AddComponent<T>();
+    }
+
+    public void SendEvent(MechanicEvent evt, Vector2 position = new(), GameObject clicked = null, string keyName = "")
+    {
+        foreach (var i in GetComponents<MechanicPattern>())
         {
-            Mechanics = new Dictionary<Type, MechanicPattern>();
-
-            // TODO: convert data into a list of mechanics
-        }
-
-        void FixedUpdate()
-        {
-            SendEvent(MechanicEvent.FixedUpdate);
-        }
-
-        public void SendEvent(MechanicEvent evt, Vector2 position = new(), GameObject clicked = null, KeyCode code = new())
-        {
-            if (Mechanics == null) return;
-            
-            foreach (var i in Mechanics.Values)
+            switch (evt)
             {
-                switch (evt)
-                {
-                    case MechanicEvent.FixedUpdate:
-                        i.FixedUpdate();
-                        break;
+                case MechanicEvent.Move:
+                    i.Move();
+                    break;
                     
-                    case MechanicEvent.Move:
-                        i.Move();
-                        break;
+                case MechanicEvent.Mouse:
+                    i.Mouse(position);
+                    break;
                     
-                    case MechanicEvent.Jump:
-                        i.Jump();
-                        break;
+                case MechanicEvent.ClickDown:
+                    i.ClickDown(position, clicked);
+                    break;
+                
+                case MechanicEvent.ClickUp:
+                    i.ClickUp(position, clicked);
+                    break;
                     
-                    case MechanicEvent.Mouse:
-                        i.Mouse(position);
-                        break;
-                    
-                    case MechanicEvent.Click:
-                        i.Click(position, clicked);
-                        break;
-                    
-                    case MechanicEvent.KeyOrButton:
-                        i.KeyOrButton(code);
-                        break;
-                }   
-            }
+                case MechanicEvent.KeyDown:
+                    i.KeyDown(keyName);
+                    break;
+                
+                case MechanicEvent.KeyUp:
+                    i.KeyUp(keyName);
+                    break;
+            }   
         }
     }
 }

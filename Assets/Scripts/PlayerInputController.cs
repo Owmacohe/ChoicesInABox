@@ -1,41 +1,46 @@
-using Mechanics;
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 public class PlayerInputController : MonoBehaviour
 {
-    [Header("Player")]
-    [SerializeField] float speed;
-    [SerializeField] float jumpHeight;
-    
-    [Header("Managers")]
     [SerializeField] MechanicManager manager;
-    
-    void OnMove()
+
+    Vector2 mousePosition;
+
+    void Start()
+    {
+        InputSystem.onAnyButtonPress.Call(callback => OnKey(callback.name));
+    }
+
+    void OnMove(InputValue value)
     {
         manager.SendEvent(MechanicEvent.Move);
         
         // TODO: move player
     }
-    
-    void OnJump()
+
+    void OnMouse(InputValue value)
     {
-        manager.SendEvent(MechanicEvent.Jump);
+        mousePosition = value.Get<Vector2>();
+        manager.SendEvent(MechanicEvent.Mouse, mousePosition);
+    }
+    
+    void OnClick(InputValue value)
+    {
+        Physics.Raycast(Camera.main.ScreenPointToRay(mousePosition), out var hit);
         
-        // TODO: jump player
+        manager.SendEvent(
+            value.Get() != null ? MechanicEvent.ClickDown : MechanicEvent.ClickUp,
+            Camera.main.ScreenToWorldPoint(mousePosition),
+            hit.transform == null ? null : hit.transform.gameObject);
     }
 
-    void OnMouse()
+    void OnKey(string value)
     {
-        manager.SendEvent(MechanicEvent.Mouse); // TODO: send position too
-    }
-    
-    void OnClick()
-    {
-        manager.SendEvent(MechanicEvent.Click); // TODO: send position and object clicked too
-    }
-
-    void OnKeyOrButton()
-    {
-        manager.SendEvent(MechanicEvent.KeyOrButton); // TODO: send key/button code t
+        manager.SendEvent(
+            Keyboard.current.anyKey.wasPressedThisFrame ? MechanicEvent.KeyUp : MechanicEvent.KeyDown,
+            new(), null, value);
     }
 }
