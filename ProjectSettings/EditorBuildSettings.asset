@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Gaameplay.unity
+    path: Assets/Scenes/Gameplay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: a56b2044782b24e7fb5066561459f3dd
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: b589358c9afc348e7b456c77beb7bde4
   m_configObjects: {}

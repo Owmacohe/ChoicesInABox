@@ -16,9 +16,7 @@ public class PlayerInputController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        manager.SendEvent(MechanicEvent.Move);
-        
-        // TODO: move player
+        manager.SendEvent(MechanicEvent.Move, value.Get<Vector2>());
     }
 
     void OnMouse(InputValue value)
@@ -39,6 +37,8 @@ public class PlayerInputController : MonoBehaviour
 
     void OnKey(string value)
     {
+        if (manager == null) return;
+        
         manager.SendEvent(
             Keyboard.current.anyKey.wasPressedThisFrame ? MechanicEvent.KeyUp : MechanicEvent.KeyDown,
             new(), null, value);

@@ -42,7 +42,6 @@
     - `Exploration` (ability to navigate the environment)
       - **Free** (can explore anywhere)
       - **Localized** (can explore within bounds)
-      - **None** (can’t move at all)
     - `MultipleDiscussionSolutions` (dialogue trees with multiple end points)
     - `MultipleTaskSolutions` (tasks to complete with multiple solutions)
     - `MultipleCombatSolutions` (combats with multiple win conditions)
