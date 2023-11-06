@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class MechanicManager : MonoBehaviour
 {
-    Type[] mechanicInitializationOrder = new[]
-    {
+    Type[] mechanicInitializationOrder = {
         typeof(CanWinLose),
         typeof(Exploration),
         typeof(Entities),
-        typeof(PopulationModification)
+        typeof(PopulationModification),
+        typeof(Inventory),
+        typeof(PlayerUpgrades)
     };
     
     void Start()
@@ -26,6 +27,10 @@ public class MechanicManager : MonoBehaviour
         AddMechanic<Exploration>().Initialize(ExplorationType.Bounded);
         AddMechanic<Entities>();
         AddMechanic<PopulationModification>();
+        AddMechanic<Inventory>();
+        AddMechanic<PlayerUpgrades>().Initialize("Upgrade1", "Upgrade2", "Upgrade3");
+        
+        // TODO: add new behaviour when certain mechanics are put together
     }
 
     T AddMechanic<T>() where T : MechanicPattern

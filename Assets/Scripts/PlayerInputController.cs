@@ -41,6 +41,6 @@ public class PlayerInputController : MonoBehaviour
         
         manager.SendEvent(
             Keyboard.current.anyKey.wasPressedThisFrame ? MechanicEvent.KeyUp : MechanicEvent.KeyDown,
-            new(), null, value);
+            new(), null, value.Trim());
     }
 }

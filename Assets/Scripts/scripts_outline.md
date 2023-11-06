@@ -38,23 +38,23 @@
 
 - `MechanicPattern` (interface that implements `FixedUpdate`, `Click`, `Move`, and `Confirm` methods, and access to the `MechanicManager`, `PlayerInputController`, `EntityManager`)
   - `PlayerMechanic`
-    - `PopulationModification` (ability to create and destroy entities)
-    - `Exploration` (ability to navigate the environment)
-      - **Free** (can explore anywhere)
-      - **Localized** (can explore within bounds)
+    - ~~`PopulationModification` (ability to create and destroy entities)~~
+    - ~~`Exploration` (ability to navigate the environment)~~
+      - ~~**Free** (can explore anywhere)~~
+      - ~~**Localized** (can explore within bounds)~~
     - `MultipleDiscussionSolutions` (dialogue trees with multiple end points)
     - `MultipleTaskSolutions` (tasks to complete with multiple solutions)
     - `MultipleCombatSolutions` (combats with multiple win conditions)
     - `UnboundedCreation` (completely modular game components)
     - `MeaningfulStoryChoices` (dialogue decisions are saved and acted upon later)
-    - `PlayerUpgrading` (knowledge unlocks or upgrades to player stats)
+    - ~~`PlayerUpgrading` (knowledge unlocks or upgrades to player stats)~~
     - `ItemUse` (consuming or actualizing items)
       - Item upgrading (ability to combine or upgrade existing items)
-    - `CanWin` (some possible game win state)
-    - `CanLose` (some possible game loss state)
-    - `Inventory` (a persistent list of items or knowledge)
+    - ~~`CanWin` (some possible game win state)~~
+    - ~~`CanLose` (some possible game loss state)~~
+    - ~~`Inventory` (a persistent list of items or knowledge)~~
   - `SystemMechanic`
-    - `Entities` (some number of NPCs)
+    - ~~`Entities` (some number of NPCs)~~
     - `AdvancedNPCReactions` (NPCs with changing or non-headlong motives)
       - **Dialogue** (own motives and reactive thought to the player)
       - **Movement** (non-direct or even adaptive pathing)
