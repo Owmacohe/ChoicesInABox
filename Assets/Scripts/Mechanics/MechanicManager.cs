@@ -1,12 +1,14 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class MechanicManager : MonoBehaviour
 {
     Type[] mechanicInitializationOrder = {
         typeof(CanWinLose),
-        typeof(Exploration),
+        typeof(Bounding),
         typeof(Entities),
+        typeof(Exploration),
         typeof(PopulationModification),
         typeof(Inventory),
         typeof(PlayerUpgrades)
@@ -24,18 +26,20 @@ public class MechanicManager : MonoBehaviour
         // TODO: make sure they're initialized in the right order using mechanicInitializationOrder
         
         AddMechanic<CanWinLose>().Initialize(null, null, null);
-        AddMechanic<Exploration>().Initialize(ExplorationType.Bounded);
+        AddMechanic<Bounding>().Initialize(BoundingType.Bounded);
         AddMechanic<Entities>();
+        AddMechanic<Exploration>();
         AddMechanic<PopulationModification>();
-        AddMechanic<Inventory>();
+        AddMechanic<Inventory>().Initialize("Item1", "Item2", "Item3");
         AddMechanic<PlayerUpgrades>().Initialize("Upgrade1", "Upgrade2", "Upgrade3");
-        
-        // TODO: add new behaviour when certain mechanics are put together
     }
 
-    T AddMechanic<T>() where T : MechanicPattern
+    public T AddMechanic<T>() where T : MechanicPattern
     {
-        return gameObject.AddComponent<T>();
+        T temp = GetComponent<T>();
+        if (temp == null) temp = gameObject.AddComponent<T>();
+        
+        return temp;
     }
 
     public void SendEvent(MechanicEvent evt, Vector2 position = new(), GameObject clicked = null, string keyName = "")
@@ -77,5 +81,19 @@ public class MechanicManager : MonoBehaviour
             }
             else if (evt.Equals(MechanicEvent.Resume)) i.Resume();
         }
+    }
+
+    public void PauseExcept(MechanicPattern pattern)
+    {
+        foreach (var i in GetComponents<MechanicPattern>())
+            if (!i.Equals(pattern))
+                i.Pause();
+    }
+
+    public void AddToControls(string control)
+    {
+        TMP_Text controls = GameObject.FindWithTag("Controls").GetComponent<TMP_Text>();
+        if (controls.text.Length > 0) controls.text += "\n";
+        controls.text += control;
     }
 }

@@ -1,51 +1,62 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Entity : MonoBehaviour
 {
     public string Name;
+    public Color Colour;
     public float Health;
     public float Speed;
     public float Armour;
     public float Damage;
     public bool Autonomous;
-    public ExplorationType Exploration;
+    [FormerlySerializedAs("Exploration")] public BoundingType bounding;
 
-    bool moving;
-    Vector3 target;
+    Entities manager;
+    Rigidbody2D rb;
+    Vector2 target;
 
     void Start()
     {
-        if (Autonomous) MoveRandom();
+        rb = GetComponent<Rigidbody2D>();
+
+        GetComponentInChildren<SpriteRenderer>().color = Colour;
+        
+        if (Autonomous && !manager.Paused) MoveRandom();
     }
 
     void FixedUpdate()
     {
-        if (Health <= 0) Die();
-
-        if (Autonomous && Random.value <= 0.01f) MoveRandom();
-
-        if (moving)
+        if (!manager.Paused)
         {
-            float convertedSpeed = Speed * 0.1f;
+            if (Health <= 0) Die();
 
-            if (Vector3.Distance(transform.position, target) > convertedSpeed * 2)
-                transform.position += (target - transform.position).normalized * convertedSpeed;
-            else moving = false;
+            if (Autonomous)
+            {
+                if (Random.value <= 0.01f) MoveRandom();
+                
+                if (Vector2.Distance(transform.position, target) > 0.1f)
+                    MoveDirection((target - (Vector2)transform.position).normalized);
+            }
         }
     }
 
     public void Initialize(
         string name,
+        Color colour,
         float health,
         float speed,
         float armour,
         float damage,
         bool autonomous,
-        ExplorationType explorationType)
+        BoundingType boundingType,
+        Entities entitiesManager)
     {
         Name = name;
+
+        Colour = colour;
         
         Health = health;
         Speed = speed;
@@ -53,23 +64,23 @@ public class Entity : MonoBehaviour
         Damage = damage;
 
         Autonomous = autonomous;
-        Exploration = explorationType;
+        bounding = boundingType;
+
+        manager = entitiesManager;
     }
 
     void MoveRandom()
     {
-        MoveTowards(Entities.GetRandomPoint());
+        target = transform.position + new Vector3(
+            Random.Range(-5f, 5f),
+            Random.Range(-5f, 5f),
+            Random.Range(-5f, 5f)
+        );
     }
     
     public void MoveDirection(Vector3 delta)
     {
-        MoveTowards(transform.position + delta);
-    }
-
-    void MoveTowards(Vector3 t)
-    {
-        target = Exploration.Equals(ExplorationType.Bounded) ? Entities.GetBoundedPoint(t) : t;
-        moving = true;
+        rb.position += (Vector2)delta * (Speed * 0.1f);
     }
 
     public void Die()

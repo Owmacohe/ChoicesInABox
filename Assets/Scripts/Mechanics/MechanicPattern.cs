@@ -6,6 +6,12 @@ public enum MechanicEvent { Move, Mouse, ClickDown, ClickUp, KeyDown, KeyUp, Pau
 public abstract class MechanicPattern : MonoBehaviour
 {
     public bool Paused;
+    protected MechanicManager MechanicManager;
+
+    protected void Awake()
+    {
+        MechanicManager = GetComponent<MechanicManager>();
+    }
     
     public virtual void Move(Vector2 delta) { }
     public virtual void Mouse(Vector2 position) { }
