@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8993310226859310016}
   - component: {fileID: -6611889256610043283}
   - component: {fileID: 5891165941871920383}
-  - component: {fileID: 4607955551186655351}
+  - component: {fileID: 2926630195609943889}
   m_Layer: 0
-  m_Name: Entity
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5289729252146531136}
@@ -91,13 +91,13 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!114 &4607955551186655351
+--- !u!114 &2926630195609943889
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,17 +106,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2753233781609120096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e393361517f248189b65769e64d251d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 24c36cff49f943a39e2775de3500d3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Colour: {r: 0, g: 0, b: 0, a: 0}
-  Health: 0
-  Speed: 0
-  Armour: 0
-  Damage: 0
-  Autonomous: 0
-  bounding: 0
 --- !u!1 &6972174720708447252
 GameObject:
   m_ObjectHideFlags: 0

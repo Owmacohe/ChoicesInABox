@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NiEngine;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class PlayerUpgrades : PlayerMechanicPattern, IInitializableMechanic
+public class PlayerUpgrades : MechanicPattern
 {
     public List<string> UpgradeList;
     public List<bool> UpgradeCompletion;
@@ -14,13 +14,8 @@ public class PlayerUpgrades : PlayerMechanicPattern, IInitializableMechanic
     ReactionStateMachine rsm;
     Transform listGrid;
 
-    public void Initialize(params object[] args)
+    public override void Initialize(params object[] args)
     {
-        rsm = Instantiate(Resources.Load<GameObject>("UpgradesCanvas")).GetComponent<ReactionStateMachine>();
-        listGrid = rsm.transform.GetChild(1);
-        
-        MechanicManager.AddToControls("<i>[Tab]</i>: player upgrades");
-        
         UpgradeList = new List<string>();
         UpgradeCompletion = new List<bool>();
         
@@ -38,6 +33,11 @@ public class PlayerUpgrades : PlayerMechanicPattern, IInitializableMechanic
                 CompleteUpgrade(copy);
             });
         }
+        
+        rsm = Instantiate(Resources.Load<GameObject>("UpgradesCanvas")).GetComponent<ReactionStateMachine>();
+        listGrid = rsm.transform.GetChild(1);
+        
+        MechanicManager.AddToControls("Tab", "player upgrades");
     }
 
     public override void KeyDown(string keyName)

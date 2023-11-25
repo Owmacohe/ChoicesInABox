@@ -1,13 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-public class PopulationModification : PlayerMechanicPattern
+public class PopulationModification : MechanicPattern
 {
     Entities manager;
-    
-    void Start()
+
+    public override void Initialize(params object[] args)
     {
-        manager = MechanicManager.AddMechanic<Entities>();
+        manager = GetComponent<Entities>();
     }
 
     public override void ClickDown(Vector2 position, GameObject clicked)
@@ -21,7 +21,7 @@ public class PopulationModification : PlayerMechanicPattern
         }
         else
         {
-            manager.CreateDefaultEntity(position, Color.red, true);
+            manager.CreateEntity(position, "Enemy", Color.red, 1, 1, 1, 1, true);
         }   
     }
 }

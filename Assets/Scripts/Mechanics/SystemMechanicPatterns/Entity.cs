@@ -12,11 +12,12 @@ public class Entity : MonoBehaviour
     public float Armour;
     public float Damage;
     public bool Autonomous;
-    [FormerlySerializedAs("Exploration")] public BoundingType bounding;
+    public BoundingType Bounding;
 
-    Entities manager;
+    [HideInInspector] public Entities Entities;
     Rigidbody2D rb;
     Vector2 target;
+    Vector2 currentDirection;
 
     void Start()
     {
@@ -24,12 +25,12 @@ public class Entity : MonoBehaviour
 
         GetComponentInChildren<SpriteRenderer>().color = Colour;
         
-        if (Autonomous && !manager.Paused) MoveRandom();
+        if (Autonomous && !Entities.Paused) MoveRandom();
     }
 
     void FixedUpdate()
     {
-        if (!manager.Paused)
+        if (!Entities.Paused)
         {
             if (Health <= 0) Die();
 
@@ -64,9 +65,9 @@ public class Entity : MonoBehaviour
         Damage = damage;
 
         Autonomous = autonomous;
-        bounding = boundingType;
+        Bounding = boundingType;
 
-        manager = entitiesManager;
+        Entities = entitiesManager;
     }
 
     void MoveRandom()
@@ -80,11 +81,22 @@ public class Entity : MonoBehaviour
     
     public void MoveDirection(Vector3 delta)
     {
-        rb.position += (Vector2)delta * (Speed * 0.1f);
+        currentDirection = delta;
+        rb.position += currentDirection * (Speed * 0.1f);
+    }
+
+    public void Attack()
+    {
+        if (currentDirection.Equals(Vector2.zero)) return;
+        
+        Instantiate(Resources.Load<GameObject>("Bullet"))
+            .GetComponent<Bullet>().Initialize(currentDirection, this);
     }
 
     public void Die()
     {
+        if (!Autonomous) Entities.CanWinLose.End(false);
+        
         Destroy(gameObject);
     }
 }

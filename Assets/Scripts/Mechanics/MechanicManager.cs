@@ -1,18 +1,11 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class MechanicManager : MonoBehaviour
 {
-    Type[] mechanicInitializationOrder = {
-        typeof(CanWinLose),
-        typeof(Bounding),
-        typeof(Entities),
-        typeof(Exploration),
-        typeof(PopulationModification),
-        typeof(Inventory),
-        typeof(PlayerUpgrades)
-    };
+    Type[] mechanicInitializationOrder = { };
     
     void Start()
     {
@@ -25,20 +18,22 @@ public class MechanicManager : MonoBehaviour
         // TODO: configure initial mechanic data member states
         // TODO: make sure they're initialized in the right order using mechanicInitializationOrder
         
-        AddMechanic<CanWinLose>().Initialize(null, null, null);
-        AddMechanic<Bounding>().Initialize(BoundingType.Bounded);
-        AddMechanic<Entities>();
-        AddMechanic<Exploration>();
-        AddMechanic<PopulationModification>();
-        AddMechanic<Inventory>().Initialize("Item1", "Item2", "Item3");
-        AddMechanic<PlayerUpgrades>().Initialize("Upgrade1", "Upgrade2", "Upgrade3");
+        AddMechanic<CanWinLose>(true).Initialize();
+        AddMechanic<Bounding>(true).Initialize(BoundingType.Bounded);
+        AddMechanic<Entities>(true).Initialize();
+        AddMechanic<Exploration>(true).Initialize(GameObject.FindWithTag("Stats").GetComponent<TMP_Text>());
+        AddMechanic<PopulationModification>(true).Initialize();
+        AddMechanic<Inventory>(true).Initialize();
+        AddMechanic<PlayerUpgrades>(true).Initialize();
+        AddMechanic<Items>(true).Initialize(true);
+        AddMechanic<Combat>(true).Initialize(true);
     }
 
-    public T AddMechanic<T>() where T : MechanicPattern
+    public T AddMechanic<T>(bool fromManager = false) where T : MechanicPattern
     {
         T temp = GetComponent<T>();
         if (temp == null) temp = gameObject.AddComponent<T>();
-        
+
         return temp;
     }
 
@@ -90,10 +85,10 @@ public class MechanicManager : MonoBehaviour
                 i.Pause();
     }
 
-    public void AddToControls(string control)
+    public void AddToControls(string key, string action)
     {
         TMP_Text controls = GameObject.FindWithTag("Controls").GetComponent<TMP_Text>();
         if (controls.text.Length > 0) controls.text += "\n";
-        controls.text += control;
+        controls.text += "<i>[" + key + "]</i>: " + action;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
@@ -27,12 +28,13 @@ public class PlayerInputController : MonoBehaviour
     
     void OnClick(InputValue value)
     {
-        Physics.Raycast(Camera.main.ScreenPointToRay(mousePosition), out var hit);
+        List<RaycastHit2D> results = new List<RaycastHit2D>();
+        Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePosition), Vector2.zero, new ContactFilter2D(), results);
         
         manager.SendEvent(
             value.Get() != null ? MechanicEvent.ClickDown : MechanicEvent.ClickUp,
             Camera.main.ScreenToWorldPoint(mousePosition),
-            hit.transform == null ? null : hit.transform.gameObject);
+            results.Count == 0 ? null : results[0].transform.gameObject);
     }
 
     void OnKey(string value)

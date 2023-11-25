@@ -1,22 +1,26 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Entities : SystemMechanicPattern
+public class Entities : MechanicPattern
 {
     [HideInInspector] public Bounding Bounding;
-    List<GameObject> entities = new List<GameObject>();
+    [HideInInspector] public List<GameObject> EntitiesList = new List<GameObject>();
     Transform entitiesParent;
 
-    new void Awake()
+    [HideInInspector] public CanWinLose CanWinLose;
+    
+    public override void Initialize(params object[] args)
     {
-        base.Awake();
-        
         entitiesParent = new GameObject("Entities").transform;
-        Bounding = MechanicManager.AddMechanic<Bounding>();
+        
+        Bounding = GetComponent<Bounding>();
+
+        CanWinLose = GetComponent<CanWinLose>();   
     }
 
-    Entity CreateEntity(
+    public Entity CreateEntity(
         Vector2 position,
         string name,
         Color colour,
@@ -51,7 +55,7 @@ public class Entities : SystemMechanicPattern
             this
         );
         
-        entities.Add(entity);
+        EntitiesList.Add(entity);
 
         return temp;
     }
@@ -63,7 +67,7 @@ public class Entities : SystemMechanicPattern
 
     public void RemoveEntity(GameObject entity)
     {
-        entities.Remove(entity);
+        EntitiesList.Remove(entity);
         entity.GetComponent<Entity>().Die();
     }
 

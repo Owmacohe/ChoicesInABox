@@ -1,28 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NiEngine;
 using TMPro;
 using UnityEngine;
 
-public class Inventory : PlayerMechanicPattern, IInitializableMechanic
+public class Inventory : MechanicPattern
 {
-    public List<string> ItemList;
+    List<string> itemNames;
+    List<ItemType> itemTypes;
 
     bool open;
     ReactionStateMachine rsm;
     Transform listGrid;
     
-    public void Initialize(params object[] args)
+    public override void Initialize(params object[] args)
     {
+        itemNames = new List<string>();
+        itemTypes = new List<ItemType>();
+
+        foreach (var i in args)
+        {
+            var temp = (KeyValuePair<string, ItemType>) i;
+            
+            AddToInventory(temp.Key, temp.Value);
+        }
+        
         rsm = Instantiate(Resources.Load<GameObject>("InventoryCanvas")).GetComponent<ReactionStateMachine>();
         listGrid = rsm.transform.GetChild(1);
 
-        MechanicManager.AddToControls("<i>[I]</i>: inventory");
-        
-        ItemList = new List<string>();
-        
-        foreach (var i in args)
-            AddToInventory((string)i);
+        MechanicManager.AddToControls("I", "inventory");
     }
 
     public override void KeyDown(string keyName)
@@ -38,9 +45,10 @@ public class Inventory : PlayerMechanicPattern, IInitializableMechanic
         }
     }
     
-    public void AddToInventory(string item)
+    public void AddToInventory(string item, ItemType type)
     {
-        ItemList.Add(item);
+        itemNames.Add(item);
+        itemTypes.Add(type);
 
         Instantiate(Resources.Load<GameObject>("InventoryItem"), listGrid)
             .GetComponentInChildren<TMP_Text>().text = item;
@@ -48,13 +56,11 @@ public class Inventory : PlayerMechanicPattern, IInitializableMechanic
 
     public void RemoveFromInventory(string item)
     {
-        RemoveFromInventory(ItemList.IndexOf(item));
-    }
-    
-    public void RemoveFromInventory(int itemIndex)
-    {
-        ItemList.RemoveAt(itemIndex);
+        int index = itemNames.IndexOf(item);
+            
+        itemNames.Remove(item); 
+        itemTypes.RemoveAt(index);
         
-        DestroyImmediate(listGrid.GetChild(itemIndex).gameObject);
+        DestroyImmediate(listGrid.GetChild(index).gameObject);
     }
 }

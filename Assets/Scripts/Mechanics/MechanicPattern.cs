@@ -13,6 +13,8 @@ public abstract class MechanicPattern : MonoBehaviour
         MechanicManager = GetComponent<MechanicManager>();
     }
     
+    public abstract void Initialize(params object[] args);
+    
     public virtual void Move(Vector2 delta) { }
     public virtual void Mouse(Vector2 position) { }
     public virtual void ClickDown(Vector2 position, GameObject clicked) { }
@@ -22,19 +24,4 @@ public abstract class MechanicPattern : MonoBehaviour
     
     public void Pause() { Paused = true; }
     public void Resume() { Paused = false; }
-}
-
-public class PlayerMechanicPattern : MechanicPattern
-{
-        
-}
-
-public class SystemMechanicPattern : MechanicPattern
-{
-        
-}
-
-public interface IInitializableMechanic
-{
-    public void Initialize(params object[] args);
 }
