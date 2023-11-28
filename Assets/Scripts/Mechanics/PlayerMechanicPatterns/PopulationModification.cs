@@ -1,13 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
-public class PopulationModification : MechanicPattern
+
+[MechanicRequirements(typeof(Entities))]
+public class PopulationModification : PlayerMechanicPattern
 {
-    Entities manager;
+    Entities entities;
 
     public override void Initialize(params object[] args)
     {
-        manager = GetComponent<Entities>();
+        entities = GetComponent<Entities>();
+        
+        MechanicManager.AddToControls("Click", "spawn/destroy");
     }
 
     public override void ClickDown(Vector2 position, GameObject clicked)
@@ -17,11 +21,11 @@ public class PopulationModification : MechanicPattern
             Entity clickedEntity = clicked.GetComponent<Entity>();
             
             if (clickedEntity != null && clickedEntity.Autonomous)
-                manager.RemoveEntity(clicked);
+                entities.RemoveEntity(clicked);
         }
         else
         {
-            manager.CreateEntity(position, "Enemy", Color.red, 1, 1, 1, 1, true);
+            entities.CreateDefaultEnemy(position);
         }   
     }
 }

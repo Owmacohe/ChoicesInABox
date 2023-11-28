@@ -2,22 +2,34 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
-public class Entities : MechanicPattern
+[MechanicRequirements(typeof(Bounding), typeof(CanWinLose))]
+public class Entities : SystemMechanicPattern
 {
     [HideInInspector] public Bounding Bounding;
     [HideInInspector] public List<GameObject> EntitiesList = new List<GameObject>();
     Transform entitiesParent;
 
     [HideInInspector] public CanWinLose CanWinLose;
+
+    bool spawnRandomly;
     
     public override void Initialize(params object[] args)
     {
+        spawnRandomly = (bool)args[0];
+        
         entitiesParent = new GameObject("Entities").transform;
         
         Bounding = GetComponent<Bounding>();
 
         CanWinLose = GetComponent<CanWinLose>();   
+    }
+
+    void FixedUpdate()
+    {
+        if (spawnRandomly && EntitiesList.Count < 10 && Random.value <= 0.01f)
+            CreateDefaultEnemy(Bounding.GetRandomWithinBounds());
     }
 
     public Entity CreateEntity(
@@ -60,9 +72,9 @@ public class Entities : MechanicPattern
         return temp;
     }
 
-    public Entity CreateDefaultEntity(Vector2 position, Color colour, bool autonomous)
+    public void CreateDefaultEnemy(Vector2 position)
     {
-        return CreateEntity(position, "TestEntity", colour, 20, 1, 10, 1, autonomous);
+        CreateEntity(position, "Enemy", Color.red, 1, 1, 1, 1, true);
     }
 
     public void RemoveEntity(GameObject entity)
@@ -80,5 +92,10 @@ public class Entities : MechanicPattern
         if (y > Bounding.Bounds.y || y < -Bounding.Bounds.y) return false;
 
         return true;
+    }
+    
+    public override string ToString()
+    {
+        return base.ToString() + (spawnRandomly ? " (spawn randomly)" : "");
     }
 }

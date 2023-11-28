@@ -2,7 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class Exploration : MechanicPattern
+[MechanicRequirements(typeof(Bounding), typeof(Entities))]
+public class Exploration : PlayerMechanicPattern
 {
     Bounding bounding;
     [HideInInspector] public Entity Player;
@@ -13,7 +14,7 @@ public class Exploration : MechanicPattern
     
     public override void Initialize(params object[] args)
     {
-        stats = (TMP_Text)args[0];
+        stats = GameObject.FindWithTag("Stats").GetComponent<TMP_Text>();
         
         bounding = GetComponent<Bounding>();
 

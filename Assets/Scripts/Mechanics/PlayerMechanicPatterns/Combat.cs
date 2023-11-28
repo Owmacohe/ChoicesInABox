@@ -2,7 +2,8 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Combat : MechanicPattern
+[MechanicRequirements(typeof(Exploration), typeof(Entities))]
+public class Combat : PlayerMechanicPattern
 {
     bool enemiesCanAttack;
     Exploration exploration;
@@ -38,5 +39,10 @@ public class Combat : MechanicPattern
     {
         if (!Paused && keyName == "space")
             exploration.Player.Attack();
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + (enemiesCanAttack ? " (enemies can attack)" : "");
     }
 }

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUpgrades : MechanicPattern
+public class PlayerUpgrades : PlayerMechanicPattern
 {
     public List<string> UpgradeList;
     public List<bool> UpgradeCompletion;

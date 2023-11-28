@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public enum BoundingType { Free, Bounded }
 
-public class Bounding : MechanicPattern
+public class Bounding : SystemMechanicPattern
 {
     public static Vector2 Bounds = new Vector2(6, 4);
     
@@ -24,5 +24,10 @@ public class Bounding : MechanicPattern
             Random.Range(-Bounds.x, Bounds.x),
             Random.Range(-Bounds.y, Bounds.y)
         );
+    }
+    
+    public override string ToString()
+    {
+        return base.ToString() + (Type.Equals(BoundingType.Free) ? " (free)" : " (bounded)");
     }
 }

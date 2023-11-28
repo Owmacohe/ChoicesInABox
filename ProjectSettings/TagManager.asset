@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Controls
   - Stats
+  - Ratio
+  - Saturation
   layers:
   - Default
   - TransparentFX

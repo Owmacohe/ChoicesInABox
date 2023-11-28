@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class CanWinLose : MechanicPattern
+public class CanWinLose : SystemMechanicPattern
 {
     public override void Initialize(params object[] args)
     {

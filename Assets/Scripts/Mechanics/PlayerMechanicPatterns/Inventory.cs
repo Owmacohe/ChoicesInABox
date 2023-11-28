@@ -5,7 +5,7 @@ using NiEngine;
 using TMPro;
 using UnityEngine;
 
-public class Inventory : MechanicPattern
+public class Inventory : PlayerMechanicPattern
 {
     List<string> itemNames;
     List<ItemType> itemTypes;

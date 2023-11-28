@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 
 public enum ItemType { Health, Speed, Armour, Damage }
 
-public class Items : MechanicPattern
+[MechanicRequirements(typeof(Inventory), typeof(Bounding))]
+public class Items : SystemMechanicPattern
 {
     [HideInInspector] public Inventory Inventory;
 
@@ -28,10 +29,15 @@ public class Items : MechanicPattern
     void FixedUpdate()
     {
         if (spawnRandomly && ItemsList.Count < 3 && Random.value <= 0.01f)
-            SpawnItem(bounds.GetRandomWithinBounds(), "Health potion", ItemType.Health);
+        {
+            var itemTypes = Enum.GetValues(typeof(ItemType));
+            ItemType itemType = (ItemType)itemTypes.GetValue(Random.Range(0, itemTypes.Length));
+            
+            SpawnItem(bounds.GetRandomWithinBounds(), itemType + " potion", itemType);
+        }
     }
 
-    public void SpawnItem(Vector2 position, string name, ItemType type)
+    void SpawnItem(Vector2 position, string name, ItemType type)
     {
         Item temp = Instantiate(
             Resources.Load<GameObject>("Item"),
@@ -41,5 +47,10 @@ public class Items : MechanicPattern
         temp.Initialize(this, name, type);
         
         ItemsList.Add(temp);
+    }
+    
+    public override string ToString()
+    {
+        return base.ToString() + (spawnRandomly ? " (spawn randomly)" : "");
     }
 }
