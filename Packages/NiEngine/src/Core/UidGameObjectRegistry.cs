@@ -233,7 +233,7 @@ namespace NiEngine
         static void AssignNewIds(SaveId saveId)
         {
             var newId = Uid.NewUid();
-            Debug.Log($"AssignNewIds '{saveId.gameObject.GetPath(out var isSceneOrStaged)}'(isSceneOrStaged:{isSceneOrStaged}) from {saveId.Uid} to {newId}");
+            //Debug.Log($"AssignNewIds '{saveId.gameObject.GetPath(out var isSceneOrStaged)}'(isSceneOrStaged:{isSceneOrStaged}) from {saveId.Uid} to {newId}");
 
             saveId.Uid = newId;
 

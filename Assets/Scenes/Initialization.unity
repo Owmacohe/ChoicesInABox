@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 128911772}
   - component: {fileID: 128911773}
   m_Layer: 5
-  m_Name: Random
+  m_Name: Custom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,7 +357,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &142985625
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 571655105}
   - component: {fileID: 571655106}
   m_Layer: 5
-  m_Name: Random
+  m_Name: Custom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1046,7 +1046,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &672790462
 GameObject:
   m_ObjectHideFlags: 0
